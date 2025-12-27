@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypingTest</title>
+    <style>
+        body{
+            background-color: #282C34;
+            margin: 0;
+            width: 100%;
+        }
+
+        .logo-block{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            margin-top: 26.25px;
+            width: 100%;
+        }
+
+        .logo{
+            display: flex;
+            justify-items: baseline;
+            align-items: center;
+        }
+
+        .logo-img{
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text{
+            color: #BABAB8;
+            margin-left: 14px;
+            font-size: 26pt;
+        }
+
+        .menu{
+            width: 503px;
+            height: 60px;
+            background-color: #313641;
+            border-radius: 18px;
+            margin-top: 233px;
+            display: flex;
+            align-items: center;
+        }
+
+        .center{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu_clocks{
+            width: 32px;
+            height: 32px;
+            margin-left: 30px;
+        }
+
+        .menu_aletter{
+            width: 32px;
+            height: 32px;
+            margin-left: 20px;
+        }
+
+        .menu_time{
+            font-size: 20px;
+            border: none;
+            background: none;
+            color: #727B8A;
+            padding: 0;
+            width: fit-content;
+            height: fit-content;
+            margin-left: 8px;
+        }
+
+        .mt{
+            color: #F8B415;
+        }
+
+        .menu_words{
+            font-size: 20px;
+            border: none;
+            background: none;
+            color: #727B8A;
+            padding: 0;
+            width: fit-content;
+            height: fit-content;
+            margin-left: 8px;
+        }
+
+        .sec{
+            font-size: 30px;
+            color: #F8B415;
+            margin-left: 60px;
+            position: relative;
+            margin-top: 160px;
+            display: none;
+        }
+
+        .counter{
+            font-size: 30px;
+            display: inline-block;
+            color: #F8B415;
+            margin-left: 60px;
+            position: relative;
+            margin-top: 160px;
+            margin-bottom: -150px;
+            display: none;
+        }
+
+        .counter_p {
+            display: inline-block; 
+            margin-left: 5px; 
+        }
+
+        .menu_words_target{
+            font-size: 20px;
+            border: none;
+            background: none;
+            color: #F8B415;
+            padding: 0;
+            width: fit-content;
+            height: fit-content;
+            margin-left: 8px;
+        }
+
+
+        .line{
+            width: 5px;
+            height: 30px;
+            background-color: #282C34;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .start_test{
+            width: 227px;
+            height: 66px;
+            background-color: #F8B415;
+            padding: 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 20pt;
+            margin-top: 50px;
+        }
+
+        .start_test_img{
+            margin-left: 10px;
+            width: 5px;
+            height: 5px;
+        }
+
+        .repeat_test{
+            width: 167px;
+            height: 66px;
+            background-color: #313641;
+            color: #727B8A;
+            padding: 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 20pt;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .repeat_test_img{
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+        }
+
+        .textBlock{
+            max-width: 90%;
+            overflow-wrap: break-word;
+        }
+
+        .te{
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .lt10{
+            display: none;
+        }
+
+        .lt25{
+            display: none;
+        }
+
+        .lt50{
+            display: none;
+        }
+
+        .lt100{
+            display: none;
+        }
+
+        .centeres{
+            width: 100%;
+            padding-left: 6%;
+            margin-bottom: 200px;
+        }
+
+        .results{
+            list-style-type: none;
+            display: grid;
+            grid-template-columns: auto auto auto auto auto;
+            grid-template-rows: auto auto auto auto auto;
+        }
+
+        .data{
+            font-size: 20px;
+            color: #727B8A;
+        }
+
+        .res{
+            font-size: 30px;
+            color: #F8B415;
+            margin-top: 24px;
+        }
+
+        .data1{
+            grid-column: 1;
+            grid-row: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .res5{
+            padding-left: 25px;
+        }
+
+        .res4{
+            padding-left: 24px;
+        }
+
+        .res3{
+            padding-left: 12px;
+        }
+
+        .repeat_test_ended{
+            width: 167px;
+            height: 66px;
+            background-color: #313641;
+            color: #727B8A;
+            padding: 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 20pt;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .start_next_test{
+            width: 227px;
+            height: 66px;
+            background-color: #F8B415;
+            padding: 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 20pt;
+            margin-top: 50px;
+            margin-left: 26px;
+        }
+
+        .result_window{
+            display: none;
+            margin-top: 300px;
+        }
+
+        .test_window{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-block">
+        <div class="logo">
+            <img src="/images/top-icon.png" alt="logo" class="logo-img">
+            <p class="logo-text"> TypingTest</p>
+        </div>
+    </div>
+    
+    <div class="test_window">
+        <div class="center">
+            <div class="menu">
+                <img class="menu_clocks" src="/images/clocks.png" alt="clocks">
+                <button class="menu_time mt">Время</button>
+
+                <button class="menu_words mw">A Слова</button>
+
+                <span class="line"></span>
+
+                <button class="menu_words lt10">10</button>
+                <button class="menu_words lt25">25</button>
+                <button class="menu_words lt50">50</button>
+                <button class="menu_words lt100">100</button>
+                <button class="menu_time t15">15</button>
+                <button class="menu_time t30">30</button>
+                <button class="menu_time t60">60</button>
+                <button class="menu_time t120">120</button>
+
+                
+            </div>  
+        </div>
+
+        <div id="timer" class="sec">0</div>  
+        <div class="counter">0 /<div class="counter_p"> 0</div></div>
+
+        <div class="te"></div>
+
+        <div class="center ">
+        <button class="start_test">Начать тест</button>
+        <button class="repeat_test">Заново<img class="repeat_test_img" src="/images/reload.png" alt="repeat_test"></button>
+        </div>
+    </div>
+    
+    <div class="result_window">
+        <div class="centeres">
+            <div>
+                <ul class="results">
+                    <li class="data1 data">Тип теста</li>
+                    <li class="data2 data">cpm</li>
+                    <li class="data3 data">Точность</li>
+                    <li class="data4 data">Символы</li>
+                    <li class="data5 data">Ошибки</li>
+                    <li class="res1 res">время 15</li>
+                    <li class="res2 res">272</li>
+                    <li class="res3 res">95%</li>
+                    <li class="res4 res">68</li>
+                    <li class="res5 res">3</li>
+                </ul>
+            </div>    
+        </div>
+
+        <div class="center ">        
+            <button class="repeat_test_ended">Заново<img class="repeat_test_img" src="/images/reload.png" alt="repeat_test"></button>
+            <button class="start_next_test">Следующий тест</button>
+        </div>
+        
+    </div>
+    <script>
+            const pushkin = {
+                "text": "У лукоморья дуб зелёный Златая цепь на дубе том: И днём и ночью кот учёный Всё ходит по цепи кругом; Идёт направо — песнь заводит, Налево — сказку говорит. Там чудеса: там леший бродит, Русалка на ветвях сидит; Там на неведомых дорожках Следы невиданных зверей; Избушка там на курьих ножках Стоит без окон, без дверей; Там лес и дол видений полны; Там о заре прихлынут волны На брег песчаный и пустой, И тридцать витязей прекрасных Чредой из вод выходят ясных, И с ними дядька их морской; Там королевич мимоходом Пленяет грозного царя; Там в облаках перед народом Через леса, через моря Колдун несёт богатыря; В темнице там царевна тужит, А бурый волк ей верно служит; Там ступа с Бабою Ягой Идёт, бредёт сама собой, Там царь Кащей над златом чахнет; Там русский дух… там Русью пахнет! И там я был, и мёд я пил; У моря видел дуб зелёный; Под ним сидел, и кот учёный Свои мне сказки говорил."
+            };
+
+            const tsvetaeva = {
+                "text": "Мне нравится, что вы больны не мной, Мне нравится, что я больна не вами, Что никогда тяжелый шар земной Не уплывет под нашими ногами. Мне нравится, что можно быть смешной — Распущенной — и не играть словами, И не краснеть удушливой волной, Слегка соприкоснувшись рукавами. Мне нравится еще, что вы при мне Спокойно обнимаете другую, Не прочите мне в адовом огне Гореть за то, что я не вас целую. Что имя нежное мое, мой нежный, не Упоминаете ни днем, ни ночью — всуе... Что никогда в церковной тишине Не пропоют над нами: аллилуйя! Спасибо вам и сердцем и рукой За то, что вы меня — не зная сами! — Так любите: за мой ночной покой, За редкость встреч закатными часами, За наши не-гулянья под луной, За солнце, не у нас над головами, — За то, что вы больны — увы! — не мной, За то, что я больна — увы! — не вами!"
+            };
+
+            const mayakovsky = {
+                "text": "А вы могли бы? Я сразу смазал карту будня, плеснувши краску из стакана; я показал на блюде студня косые скулы океана. На чешуе жестяной рыбы прочел я зовы новых губ. А вы ноктюрн сыграть могли бы на флейте водосточных труб?"
+            };
+
+            const block = {
+                "text": "За городом вырос пустынный квартал. На почве болотной и зыбкой. Там жили поэты, — и каждый встречал Другого надменной улыбкой. Бродили они по переулкам одним, Вдыхали туманный холод рассвета. Как знать, — может быть, и я был с ними, И сам незаметно для света. Их жены худые, ребята тощи, И та, что за шторой сидит, Как будто сомненьями полная мысль, На них сокрушенно глядит. Их взгляды пестальны, их речи незлобивы, Лишь песни их дивно-прекрасны. Они запоздалые дети Москвы, Москвы запоздалые ласточки."
+            };
+
+            function getRandomText() {
+                const poems = [
+                    pushkin.text,
+                    tsvetaeva.text,
+                    mayakovsky.text,
+                    block.text
+                ];
+                const randomIndex = Math.floor(Math.random() * poems.length);
+                return poems[randomIndex];
+            }
+
+            const start_next_test = document.querySelector('.start_next_test');
+            const startBtn = document.querySelector('.start_test');
+            const repeatBtn = document.querySelector('.repeat_test');
+            const repeat_test_ended = document.querySelector('.repeat_test_ended');
+            const timeBtn = document.querySelector('.menu_time');
+            const wordsBtn = document.querySelector('.menu_words');
+            const lt10 = document.querySelector('.lt10');
+            const lt25 = document.querySelector('.lt25');
+            const lt50 = document.querySelector('.lt50');
+            const lt100 = document.querySelector('.lt100');
+            const t15 = document.querySelector('.t15');
+            const t30 = document.querySelector('.t30');
+            const t60 = document.querySelector('.t60');
+            const t120 = document.querySelector('.t120');
+            const menu = document.querySelector('.menu');
+            const timer = document.querySelector('.sec');
+            let counter = document.querySelector('.counter');
+            let counter_p = document.querySelector('.counter_p');
+            let timerID;
+
+            const test_window = document.querySelector('.test_window');
+            const result_window = document.querySelector('.result_window');
+
+            let sec = 0;
+            let target_sec = 0;
+            let chosedWords = '';
+            let chosedTime = '';
+            let isStarted = 0;
+            let cn;
+
+            let all_sy = 0;
+            let true_sy = 0;
+            let false_sy = 0;
+            let cpm = 0;
+            let accuracy = 0;
+
+            let res;
+
+            let endedWord = 0;
+
+            window.addEventListener('click', (e) =>{
+                if(isStarted === 0){
+                    if(e.target.matches('.lt10')){
+                        chosedWords = 'lt10'
+                        chosedTime = '';
+                        cn = '10';
+                        lt10.style.color = '#F8B415';
+                        lt25.style.color = '#727B8A';
+                        lt50.style.color = '#727B8A';
+                        lt100.style.color = '#727B8A';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'Слова 10';
+                    }else if(e.target.matches('.lt25')){
+                        chosedWords = 'lt25'
+                        chosedTime = '';
+                        cn = '25'
+                        lt10.style.color = '#727B8A'
+                        lt25.style.color = '#F8B415'
+                        lt50.style.color = '#727B8A'
+                        lt100.style.color = '#727B8A'
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'Слова 25';
+                    }else if(e.target.matches('.lt50')){
+                        chosedWords = 'lt50'
+                        chosedTime = '';
+                        cn = '50';
+                        lt10.style.color = '#727B8A';
+                        lt25.style.color = '#727B8A';
+                        lt50.style.color = '#F8B415';
+                        lt100.style.color = '#727B8A';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'Слова 50';
+                    }else if(e.target.matches('.lt100')){
+                        chosedWords = 'lt100'
+                        chosedTime = '';
+                        cn = '100';
+                        lt10.style.color = '#727B8A';
+                        lt25.style.color = '#727B8A';
+                        lt50.style.color = '#727B8A';
+                        lt100.style.color = '#F8B415';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'Слова 100';
+                    }else if(e.target.matches('.t15')){
+                        chosedTime = 't15';
+                        chosedWords = '';
+                        target_sec = 15;
+                        t15.style.color = '#F8B415';
+                        t30.style.color = '#727B8A';
+                        t60.style.color = '#727B8A';
+                        t120.style.color = '#727B8A';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'время 15';
+                    }else if(e.target.matches('.t30')){
+                        chosedTime = 't30';
+                        chosedWords = '';
+                        target_sec = 30;
+                        t15.style.color = '#727B8A';
+                        t30.style.color = '#F8B415';
+                        t60.style.color = '#727B8A';
+                        t120.style.color = '#727B8A';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'время 30';
+                    }else if(e.target.matches('.t60')){
+                        chosedTime = 't60';
+                        chosedWords = '';
+                        target_sec = 60;
+                        t15.style.color = '#727B8A';
+                        t30.style.color = '#727B8A';
+                        t60.style.color = '#F8B415';
+                        t120.style.color = '#727B8A';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'время 60';
+                    }else if(e.target.matches('.t120')){
+                        chosedTime = 't120';
+                        chosedWords = '';
+                        target_sec = 120;
+                        t15.style.color = '#727B8A';
+                        t30.style.color = '#727B8A';
+                        t60.style.color = '#727B8A';
+                        t120.style.color = '#F8B415';
+                        document.querySelector('.res1').childNodes[0].nodeValue = 'время 120';
+                    }
+             }
+            });
+
+            function init(n){
+                sec = 0;
+                timerID = setInterval(tick, 1000, n);
+            }
+
+            function tick(n){
+                sec++;
+                document.getElementById("timer").childNodes[0].nodeValue = sec;
+                if(sec >= n){
+                    clearInterval(timerID);
+                }
+                if(sec == target_sec){
+                    updateRes();
+                    test_window.style.display = 'none';
+                    result_window.style.display = 'block';
+                }
+            }
+
+            wordsBtn.addEventListener('click', () =>{
+                lt10.style.display = 'block';
+                lt25.style.display = 'block';
+                lt50.style.display = 'block';
+                lt100.style.display = 'block';
+                t15.style.display = 'none';
+                t30.style.display = 'none';
+                t60.style.display = 'none';
+                t120.style.display = 'none';
+                document.querySelector('.mw').style.color = '#F8B415'
+                document.querySelector('.mt').style.color = '#727B8A'
+                lt10.style.color = '#727B8A';
+                lt25.style.color = '#727B8A';
+                lt50.style.color = '#727B8A';
+                lt100.style.color = '#727B8A';
+                chosedWords = '';
+            });
+
+            timeBtn.addEventListener('click', () =>{
+                lt10.style.display = 'none';
+                lt25.style.display = 'none';
+                lt50.style.display = 'none';
+                lt100.style.display = 'none';
+                t15.style.display = 'block';
+                t30.style.display = 'block';
+                t60.style.display = 'block';
+                t120.style.display = 'block';
+                document.querySelector('.mw').style.color = '#727B8A';
+                document.querySelector('.mt').style.color = '#F8B415';
+            });
+
+
+
+            function choiceMode(n) {
+                switch (n) {
+                    case 'lt10': 
+                        countWords(10);
+                        break;
+                    case 'lt25':
+                        countWords(25);
+                        break;
+                    case 'lt50':           
+                        countWords(50);
+                        break;
+                    case 'lt100':
+                        countWords(100);
+                        break;
+                    case 't15':
+                        init(15);
+                        break;
+                    case 't30':
+                        init(30);
+                        break;
+                    case 't60':
+                        init(60);
+                        break;
+                    case 't120':
+                        init(120);
+                        break;
+                    default:
+                        console.error("Invalid mode: " + n); 
+                }
+            };
+
+            let lettersArray = getRandomText().split('');
+
+            function countWords(n){
+            let c = 0;
+            let tmp = [];
+                for(let i = 0; i < lettersArray.length; i++){
+                    if(c <= n-1){
+                        tmp.push(lettersArray[i]);
+                        if(lettersArray[i] === ' '){
+                            c++;
+                            
+                        }
+                    }else i = lettersArray.length;
+                }
+                lettersArray = tmp;
+                console.log(lettersArray);
+            }
+
+
+            function returnText (){
+                const container = document.createElement('div'); 
+                container.className = 'textBlock';
+                const centerContainer = document.querySelector('.te');
+                centerContainer.appendChild(container);
+
+                for (let i = 0; i < lettersArray.length; i++) {
+                    const letterElement = document.createElement('span');
+                    letterElement.innerText = lettersArray[i];
+                    
+                    letterElement.style.margin = '1px'; 
+                    
+                    letterElement.className = `l${i}`; 
+
+                    letterElement.style.color = '#727B8A';
+                    letterElement.style.fontSize = '30px'
+
+                    container.appendChild(letterElement);
+                }
+            };
+
+
+            startBtn.addEventListener('click', () => {
+                if(chosedWords != '' || chosedTime != ''){
+                    isStarted = 1;
+                    if(chosedWords != ''){
+                        choiceMode(chosedWords);
+                        document.querySelector('.te').style.marginTop = '170px';
+                        counter.style.display = 'block';
+                        document.querySelector('.counter_p').childNodes[0].nodeValue = cn;
+                        init(99999);
+                    } else if(chosedTime != ''){
+                        choiceMode(chosedTime);
+                        timer.style.display = 'block';
+                    }
+                    returnText();
+                    startBtn.style.display = 'none';
+                    repeatBtn.style.display = 'block';
+                    i = 0;
+                    menu.style.display = 'none';
+                } 
+
+                if(target === document.querySelector(`.l${i}`).textContent){
+                    document.querySelector(`.l${i}`).style.textDecoration = 'underline';
+                }
+            });
+
+            start_next_test.addEventListener('click', () => {
+                lettersArray = getRandomText().split(''); 
+
+                if (chosedWords != '' || chosedTime != '') {
+                    isStarted = 1; 
+                    if (chosedWords != '') {
+                        choiceMode(chosedWords);
+                        document.querySelector('.te').style.marginTop = '170px';
+                        counter.style.display = 'block';
+                        document.querySelector('.counter_p').childNodes[0].nodeValue = cn;
+                        init(99999);
+                    } else if (chosedTime != '') {
+                        choiceMode(chosedTime);
+                        timer.style.display = 'block';
+                    }
+                    resetTestParams();
+                    startBtn.style.display = 'none';
+                    repeatBtn.style.display = 'block';
+                    menu.style.display = 'none';
+                    test_window.style.display = 'block'; 
+                    result_window.style.display = 'none'; 
+                }
+            });
+
+
+            function resetTestParams() {
+                document.querySelector('.textBlock').remove(); 
+                returnText(); 
+                i = 0; 
+                sec = 0; 
+                document.getElementById("timer").childNodes[0].nodeValue = sec;
+                clearInterval(timerID); 
+                endedWord = 0; 
+                counter.childNodes[0].nodeValue = endedWord + ' /';
+                all_sy = 0; 
+                true_sy = 0; 
+                false_sy = 0; 
+                cpm = 0; 
+                accuracy = 0; 
+            }
+
+
+            function restartTest() {
+                resetTestParams();
+                test_window.style.display = 'block';
+                result_window.style.display = 'none';
+                init(9999);
+            }
+
+            repeat_test_ended.addEventListener('click', restartTest);
+            repeatBtn.addEventListener('click', restartTest);
+
+
+
+            let target = lettersArray[0];
+
+
+            let i = 0;
+
+            function handleKeyPress(event) {
+                let lastKeyPressed = event.key;
+
+                if (lastKeyPressed === 'Shift' || lastKeyPressed === 'Backspace') {
+                    return;
+                }
+
+                if(target == ' '){
+                    endedWord++;
+                    counter.childNodes[0].nodeValue = endedWord + ' /';
+                }
+
+                if(endedWord == cn){
+                    updateRes();
+                    test_window.style.display = 'none';
+                    result_window.style.display = 'block';
+                }
+
+                if(target === document.querySelector(`.l${i}`).textContent){
+                    document.querySelector(`.l${i+1}`).style.textDecoration = 'underline';
+                }
+
+                if(lastKeyPressed === target){
+                    console.log(target)
+                    document.querySelector(`.l${i}`).style.color = '#C3C3C3';
+                    document.querySelector(`.l${i}`).style.textDecoration = 'underline';
+                    document.querySelector(`.l${i}`).style.textDecorationColor = 'green';
+                    i++;
+                    target = lettersArray[i];
+                    all_sy++;
+                    true_sy++;
+                }else{
+                    if(lastKeyPressed == ' '){
+                        document.querySelector(`.l${i}`).style.color = '#EE5867';
+                        
+                        i ++;
+                        target = lettersArray[i];
+                    } else {
+                        console.log(target)
+                        document.querySelector(`.l${i}`).style.color = '#EE5867';
+                        document.querySelector(`.l${i}`).style.textDecoration = 'underline';
+                        document.querySelector(`.l${i}`).innerText = lastKeyPressed;
+                        all_sy++;
+                        false_sy++;
+                        i ++;
+                        target = lettersArray[i];
+                    }
+                }
+            }
+
+            function updateRes(){
+                cpm = Math.round((all_sy / sec) * 60);
+                accuracy = Math.round((true_sy / all_sy) * 100);
+
+                document.querySelector('.res2').
+                childNodes[0].nodeValue = cpm;
+
+                document.querySelector('.res3').
+                childNodes[0].nodeValue = accuracy + '%';
+
+                document.querySelector('.res4').
+                childNodes[0].nodeValue = all_sy;
+
+                document.querySelector('.res5').
+                childNodes[0].nodeValue = false_sy;
+            }
+
+            window.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>
