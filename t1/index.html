@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            height: 200vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .main {
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .addTask {
+            position: fixed;
+            bottom: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: orange;
+            color: white;
+            border: none;
+            font-size: 34px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .tasks {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .task-input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 100px;
+            resize: none;
+        }
+        .task-item {
+            margin: 5px;
+            border: 1px solid #333;
+            border-radius: 7px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .create-header{
+            display: flex;
+            justify-content: space-between;
+        }
+        .cancel{
+            font-size: 44px;
+            border: none;
+            color: orange;
+            cursor: pointer;
+        }
+        .save{
+            font-size: 44px;
+            border: none;
+            color: orange;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .task-buttons {
+            margin: 1vh;
+        }
+        .delete {
+            border: none;
+            border-color: red;
+            cursor: pointer;
+            margin-left: 0.5vh;
+        }
+        .edit {
+            border: none;
+            cursor: pointer;
+        }
+        .unactive {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .task-text {
+            margin: 1vh;
+        }
+        .task-check {
+            margin-right: 1vh;
+            cursor: pointer;
+            accent-color: green;
+        }
+        .task-field {
+            text-decoration: line-through;
+        }
+        .error {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #ff4444;
+            color: white;
+            text-align: center;
+            border-radius: 20%;
+            position: fixed;
+            z-index: 1;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+
+        }
+        .error.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page main" id="main">
+            <div class="tasks" id="tasks"></div>
+            <h2 class="img" id="img">Заглушка</h2>
+            <button type="button" class="addTask" id="addTask">+</button>
+        </div>
+        <div class="page hidden" id="createPage">
+            <div class="create-header">
+                <button class="cancel" id="cancel">←</button>
+                <button class="save" id="save">✔</button>
+            </div>
+            <div id="error" class="error">
+                <div class="errorContent">Поле обязательное для заполнения!</div>
+            </div>
+            <textarea class="task-input" id="taskInput" placeholder="Add New Task..."></textarea>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const main = document.getElementById("main");
+            const createPage = document.getElementById("createPage");
+            const addTask = document.getElementById("addTask");
+            const cancel = document.getElementById("cancel");
+            const save = document.getElementById("save");
+            const taskInput = document.getElementById("taskInput");
+            const tasks = document.getElementById("tasks");
+            const img = document.getElementById("img");
+            const error = document.getElementById("error");
+            
+            // localStorage.clear();
+            function renderToDoList() {
+                tasks.innerHTML = '';
+                img.classList.remove('hidden');
+                if (localStorage.length > 0) {
+                    img.classList.add('hidden');
+                    let i = 0;
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+                        const taskData = JSON.parse(localStorage.getItem(key));
+
+                        // общий контейнер для всех элементов задачи
+                        const taskElement = document.createElement('div');
+                        taskElement.className = 'task-item';
+
+                        // контейнер для текста задачи и галочки
+                        const taskText = document.createElement('div');
+                        taskText.className = 'task-text';
+
+                        const taskCheck = document.createElement('input');
+                        taskCheck.type = 'radio';
+                        taskCheck.className = 'task-check';
+
+                        const taskField = document.createElement('span');
+                        taskField.textContent = taskData.name;
+                        taskField.id = key;
+                        taskCheck.onchange = () => {
+                            setDone(key);
+                        }
+                        
+
+                        // конейнер для кнопок изменить и удалить задачу
+                        const taskBtns = document.createElement('div');
+                        taskBtns.className = 'task-buttons';
+
+                        const taskEdit = document.createElement('button');
+                        taskEdit.type = 'button';
+                        taskEdit.className = 'edit';
+                        taskEdit.textContent = '🚬';
+                        taskEdit.id = key + "edit";
+                        taskEdit.onclick = () => {
+                            editTask(key);
+                        }
+
+                        const taskDelete = document.createElement('button');
+                        taskDelete.type = 'button';
+                        taskDelete.className = 'delete';
+                        taskDelete.textContent = '❎';
+                        taskDelete.onclick = () => {
+                            deleteItem(key);
+                        };
+
+                        if(taskData.status == "on") { // изменить на bool
+                            taskCheck.checked = true;
+                            taskField.classList.add('task-field');
+                            taskEdit.classList.add('unactive');
+                        }
+
+                        taskBtns.appendChild(taskEdit);
+                        taskBtns.appendChild(taskDelete);
+
+                        taskText.appendChild(taskCheck);
+                        taskText.appendChild(taskField);
+
+                        taskElement.appendChild(taskText);
+                        taskElement.appendChild(taskBtns);
+
+                        tasks.appendChild(taskElement);
+                    }
+                }
+            }
+
+            renderToDoList();
+
+            // открытие окна добавления задачи
+            addTask.onclick = () => {
+                openModal();
+            }
+
+            let currentKey;
+            // 
+            save.onclick = () => {
+                createTask(currentKey);
+
+                currentKey = 0;
+            }
+
+            // скрытие экрана создания записи
+            cancel.onclick = () => {
+                createPage.classList.add('hidden');
+                main.classList.remove('hidden');
+            }
+
+            // окно создания записи
+            function openModal() {
+                main.classList.add('hidden');
+                createPage.classList.remove('hidden');
+                taskInput.value = '';
+            }
+
+            // функция создания записи
+            function createTask(currentKey) {
+                const taskText = taskInput.value;
+                const task = { name: taskText, status: false};
+                
+                if (!taskText) {
+                    error.classList.add('show');
+
+                    setTimeout(() => {
+                        error.classList.remove('show');
+                    }, 3000);
+                }
+
+                if (task != null && currentKey != 0) {
+                    localStorage.setItem(currentKey, JSON.stringify(task));
+                    renderToDoList();
+
+                    createPage.classList.add('hidden');
+                    main.classList.remove('hidden');
+
+                    return;
+                }
+
+                if (taskText) {
+                    localStorage.setItem(Date.now, JSON.stringify(task));
+                    console.log(JSON.stringify(task));
+                    renderToDoList();
+
+                    createPage.classList.add('hidden');
+                    main.classList.remove('hidden');
+                }
+            }
+
+            // удаление задачи
+            function deleteItem(key) {
+                localStorage.removeItem(key);
+                renderToDoList();
+            }
+
+            // изменение статуса задачи
+            function editTask(key) {
+                main.classList.add('hidden');
+                createPage.classList.remove('hidden');
+                const taskData = JSON.parse(localStorage.getItem(key));
+                taskInput.value = taskData.name;
+
+                currentKey = key;
+            }
+
+            // 
+            function setDone(key) {
+                const taskField = document.getElementById(key)
+                taskField.classList.add('task-field');
+
+                const edit = document.getElementById(key + "edit")
+                edit.classList.add('unactive');
+
+                const taskData = JSON.parse(localStorage.getItem(key));
+                taskData.status = "on";
+                localStorage.setItem(key, JSON.stringify(taskData));
+            }
+        });
+    </script>
+</body>
+</html>
